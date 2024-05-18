@@ -21,10 +21,13 @@ const dataSlice = createSlice({
 	initialState,
 	reducers: {
 		addScore: (state) => {
-			state.score += 2;
+			state.score += 3;
 		},
 		deductScore: (state) => {
 			state.score -= 1;
+		},
+		drawScrore: (state) => {
+			state.score -= 0.5;
 		},
 		userPick: (state, action) => {
 			state.userselection = action.payload;
@@ -52,6 +55,7 @@ export const {
 	changeModal,
 	housePick,
 	setResult,
+	drawScrore,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

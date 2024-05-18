@@ -5,10 +5,17 @@ import LizardIcon from './LizardIcon';
 import SpockIcon from './SpockIcon';
 import { useDispatch } from 'react-redux';
 import { userPick } from '../../store/dataslice';
+import { motion } from 'framer-motion';
 export default function BonusGame() {
 	const dispatch = useDispatch();
 	return (
-		<div className='w-72 lg:w-80 h-72 bg-pentagonBg bg-center bg-no-repeat bg-contain relative mt-20'>
+		<motion.div
+			initial={{ scale: 0, opacity: 0 }}
+			animate={{ scale: 1, opacity: 1 }}
+			key={'bonus'}
+			exit={{ scale: 0 }}
+			className='w-72 lg:w-80 h-72 bg-pentagonBg bg-center bg-no-repeat bg-contain relative mt-20'
+		>
 			<div
 				className=' absolute top-12 -right-10'
 				onClick={() => dispatch(userPick('paper'))}
@@ -39,6 +46,6 @@ export default function BonusGame() {
 			>
 				<SpockIcon />
 			</div>
-		</div>
+		</motion.div>
 	);
 }

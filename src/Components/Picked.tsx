@@ -12,7 +12,9 @@ import {
 	deductScore,
 	userPick,
 	setResult,
+	drawScrore,
 } from '../../store/dataslice';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Picked() {
 	const dispatch = useDispatch();
@@ -61,22 +63,37 @@ export default function Picked() {
 		dispatch(housePick(computerSelection));
 		if (
 			(userpick == 'paper' && computerSelection == 'rock') ||
+			(userpick == 'paper' && computerSelection == 'spock') ||
 			(userpick == 'rock' && computerSelection == 'scissors') ||
-			(userpick == 'scissors' && computerSelection == 'paper')
+			(userpick == 'rock' && computerSelection == 'lizard') ||
+			(userpick == 'scissors' && computerSelection == 'paper') ||
+			(userpick == 'scissors' && computerSelection == 'lizard') ||
+			(userpick == 'lizard' && computerSelection == 'spock') ||
+			(userpick == 'lizard' && computerSelection == 'paper') ||
+			(userpick == 'spock' && computerSelection == 'scissors') ||
+			(userpick == 'spock' && computerSelection == 'rock')
 		) {
 			console.log('You Win');
 			dispatch(setResult('win'));
 			dispatch(addScore());
 		} else if (
 			(userpick == 'paper' && computerSelection == 'scissors') ||
+			(userpick == 'paper' && computerSelection == 'lizard') ||
 			(userpick == 'rock' && computerSelection == 'paper') ||
-			(userpick == 'scissors' && computerSelection == 'rock')
+			(userpick == 'rock' && computerSelection == 'spock') ||
+			(userpick == 'scissors' && computerSelection == 'rock') ||
+			(userpick == 'scissors' && computerSelection == 'spock') ||
+			(userpick == 'lizard' && computerSelection == 'rock') ||
+			(userpick == 'lizard' && computerSelection == 'scissors') ||
+			(userpick == 'spock' && computerSelection == 'lizard') ||
+			(userpick == 'spock' && computerSelection == 'paper')
 		) {
 			console.log('YOU lose');
 			dispatch(setResult('lose'));
 			dispatch(deductScore());
 		} else {
 			dispatch(setResult('draw'));
+			dispatch(drawScrore());
 			console.log('Draw');
 		}
 	};
@@ -106,50 +123,81 @@ export default function Picked() {
 	};
 	return (
 		<>
-			<div className='w-full lg:w-1/2 flex font-barlow-bold items-start justify-between uppercase text-white text-lg mt-10 md:px-14 px-3'>
+			<motion.div
+				initial={{ scale: 0.9, opacity: 0 }}
+				animate={{ scale: 1, opacity: 1 }}
+				key={'picked'}
+				exit={{ scale: 0 }}
+				layout
+				className='w-full lg:w-1/2 flex font-barlow-bold items-start justify-between uppercase text-white text-lg mt-10 md:px-14 px-3'
+			>
 				<div className='flex flex-col justify-center space-y-10 items-center'>
 					<h1>You Picked</h1>
 					<div>{getIcon()}</div>
 				</div>
+				<AnimatePresence>
+					{store.housepick && (
+						<motion.div
+							initial={{ scale: 0, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							transition={{ duration: 0.5, delay: 1.5, type: 'spring' }}
+							className='hidden lg:flex flex-col items-center justify-center h-full gap-5'
+						>
+							{store.win == 'win' ? (
+								<div className='lg:text-5xl text-xl  text-green-400'>
+									You Win
+								</div>
+							) : store.win == 'lose' ? (
+								<div className='lg:text-5xl text-xl text-red-600'>You Lose</div>
+							) : (
+								<div className='lg:text-5xl text-xl  text-gray-100'>
+									You Draw
+								</div>
+							)}
+							<button
+								className='text-xs uppercase font-barlow-regular px-6 bg-white text-black rounded-lg p-2 shadow-lg hover:text-red-200 hover:scale-95 transition duration-300 ease-in-out'
+								onClick={() => handleReplay()}
+							>
+								play again
+							</button>
+						</motion.div>
+					)}
+				</AnimatePresence>
+				<div className='flex flex-col justify-center space-y-10 items-center'>
+					<h1>The House Picked</h1>
+					<motion.div
+						initial={{ scale: 0, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						transition={{ duration: 1, delay: 0.5, type: 'spring' }}
+					>
+						{getComputerIcon()}
+					</motion.div>
+				</div>
+			</motion.div>
+			<AnimatePresence>
 				{store.housepick && (
-					<div className='hidden lg:flex flex-col items-center justify-center h-full gap-5'>
+					<motion.div
+						initial={{ scale: 0, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						transition={{ duration: 0.5, delay: 1.5, type: 'spring' }}
+						className='lg:hidden flex-col items-center justify-center h-full gap-5 p-10 font-barlow-bold'
+					>
 						{store.win == 'win' ? (
-							<div className='lg:text-4xl text-xl  text-green-100'>You Win</div>
+							<div className='text-6xl   text-green-400'>You Win</div>
 						) : store.win == 'lose' ? (
-							<div className='lg:text-4xl text-xl text-red-100'>You Lose</div>
+							<div className='text-6xl text-red-400'>You Lose</div>
 						) : (
-							<div className='lg:text-4xl text-xl  text-gray-100'>You Draw</div>
+							<div className='text-6xl   text-gray-100'>You Draw</div>
 						)}
 						<button
-							className='text-xs uppercase font-barlow-regular px-6 bg-white text-black rounded-lg p-2 shadow-lg hover:text-red-200 hover:scale-95 transition duration-300 ease-in-out'
+							className='text-lg uppercase font-barlow-regular px-6 bg-white text-black rounded-lg p-2 shadow-lg hover:text-red-200 hover:scale-95 transition duration-300 ease-in-out w-full mt-4'
 							onClick={() => handleReplay()}
 						>
 							play again
 						</button>
-					</div>
+					</motion.div>
 				)}
-				<div className='flex flex-col justify-center space-y-10 items-center'>
-					<h1>The House Picked</h1>
-					{getComputerIcon()}
-				</div>
-			</div>
-			{store.housepick && (
-				<div className='lg:hidden flex-col items-center justify-center h-full gap-5 p-10 font-barlow-bold'>
-					{store.win == 'win' ? (
-						<div className='text-6xl   text-green-100'>You Win</div>
-					) : store.win == 'lose' ? (
-						<div className='text-6xl text-red-100'>You Lose</div>
-					) : (
-						<div className='text-6xl   text-gray-100'>You Draw</div>
-					)}
-					<button
-						className='text-lg uppercase font-barlow-regular px-6 bg-white text-black rounded-lg p-2 shadow-lg hover:text-red-200 hover:scale-95 transition duration-300 ease-in-out w-full mt-4'
-						onClick={() => handleReplay()}
-					>
-						play again
-					</button>
-				</div>
-			)}
+			</AnimatePresence>
 		</>
 	);
 }
