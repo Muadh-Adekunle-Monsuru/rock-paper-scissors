@@ -5,6 +5,7 @@ interface gamestate {
 	bonus: boolean;
 	modalOpen: boolean;
 	housepick: string;
+	win: string;
 }
 
 const initialState: gamestate = {
@@ -13,13 +14,14 @@ const initialState: gamestate = {
 	bonus: false,
 	modalOpen: false,
 	housepick: '',
+	win: '',
 };
 const dataSlice = createSlice({
 	name: 'dataslice',
 	initialState,
 	reducers: {
 		addScore: (state) => {
-			state.score += 1;
+			state.score += 2;
 		},
 		deductScore: (state) => {
 			state.score -= 1;
@@ -36,6 +38,9 @@ const dataSlice = createSlice({
 		changeModal: (state) => {
 			state.modalOpen = !state.modalOpen;
 		},
+		setResult: (state, action) => {
+			state.win = action.payload;
+		},
 	},
 });
 
@@ -46,6 +51,7 @@ export const {
 	changeGame,
 	changeModal,
 	housePick,
+	setResult,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
