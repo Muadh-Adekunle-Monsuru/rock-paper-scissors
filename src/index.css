@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--scissors1: 39deg 89% 49%;
+		--scissors2: 40deg 84% 53%;
+		--paper1: 230deg 89% 62%;
+		--paper2: 230deg 89% 65%;
+		--rock1: 349 71% 52%;
+		--rock2: 349deg 70% 56%;
+		--lizard1: 261deg 73% 60%;
+		--lizard2: 261deg 72% 63%;
+		--cyan1: 189deg 59% 53%;
+		--cyan2: 189deg 58% 57%;
+		--darkText: 229deg 25%, 31%;
+		--scoreText: 229deg 64% 46%;
+		--headerOutline: 217deg 16% 45%;
+		--radialGradient1: 214deg 47% 23%;
+		--radialGradient2: 237deg 49% 15%;
+	}
+	@font-face {
+		font-family: 'barlow-regular';
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url(/assets/fonts/barlow-regular.ttf) format('truetype');
+	}
+	@font-face {
+		font-family: 'barlow-bold';
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap;
+		src: url(/assets/fonts/barlow-bold.ttf) format('truetype');
+	}
+}
