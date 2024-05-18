@@ -43,13 +43,13 @@ function App() {
 				)}
 			</AnimatePresence>
 			<button
-				className='border border-white px-6 text-lg p-1 uppercase font-mono text-white rounded-md absolute bottom-5 lg:bottom-3 right-3'
+				className='border border-white px-6 text-lg p-1 uppercase font-mono text-white rounded-md absolute  bottom-14 lg:bottom-3 right-3'
 				onClick={() => dispatch(changeModal())}
 			>
 				Rules
 			</button>
 			<button
-				className='border border-white px-6 text-lg p-1 uppercase font-mono text-white rounded-md absolute bottom-5 left-3'
+				className='border border-white px-6 text-lg p-1 uppercase font-mono text-white rounded-md absolute bottom-14 left-3'
 				onClick={() => changeGameMode()}
 			>
 				{store.bonus ? 'Regular ' : 'Bonus '}
